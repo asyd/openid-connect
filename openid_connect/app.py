@@ -1,8 +1,7 @@
-from flask import Flask
+from flask import Flask, flash, redirect, url_for
 from flask_migrate import Migrate
 from .extensions import db, auth
 from flask_pyoidc.provider_configuration import ProviderConfiguration, ClientMetadata
-from flask_pyoidc import OIDCAuthentication
 
 
 def create_app(environment: str):
@@ -37,5 +36,11 @@ def create_app(environment: str):
     @app.route('/ping')
     def ping():
         return 'pong'
+
+    @app.route('/logout')
+    @auth.oidc_logout
+    def logout():
+        flash("You've been successfully logout")
+        return redirect(url_for('ui.hello'))
 
     return app

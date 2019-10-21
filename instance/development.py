@@ -3,7 +3,7 @@ import datetime
 
 SQLALCHEMY_DATABASE_URI = 'sqlite:///dev.db'
 SECRET_KEY = 'unsecure-dev-key'
-# SERVER_NAME = socket.getfqdn()
+SERVER_NAME = 'asuka.home.opencsi.com:5000'
 
 PERMANENT_SESSION_LIFETIME = datetime.timedelta(days=7).total_seconds()
 PREFERRED_URL_SCHEME = "http"
