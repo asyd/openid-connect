@@ -5,6 +5,8 @@ from flask_pyoidc.provider_configuration import ProviderConfiguration, ClientMet
 from flask_pyoidc.user_session import UserSession
 import datetime
 
+from extensions import auth
+
 bp = Blueprint(
     'ui',
     __name__,
@@ -16,7 +18,7 @@ bp = Blueprint(
 #                    'PREFERRED_URL_SCHEME': 'http',
 #                    'DEBUG': True})
 #
-with app
+# with app
 keycloak = ClientMetadata(
     client_id='flask-demo',
     client_secret='ff496a65-7455-4b45-b3ee-39ec31c3166e'
@@ -25,8 +27,6 @@ config = ProviderConfiguration(
     issuer='http://asuka.home.opencsi.com:8080/auth/realms/OpenCSI',
     client_metadata=keycloak
 )
-
-auth = OIDCAuthentication({'default': app.config['OAUTH']}, app)
 
 
 @bp.route('/')
