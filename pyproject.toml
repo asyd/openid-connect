@@ -10,6 +10,9 @@ flask = "^1.1"
 flask-pyoidc = "^3.0"
 flask-sqlalchemy = "^2.4"
 flask-migrate = "^2.5"
+wtforms-alchemy = "^0.16.9"
+flask-debugtoolbar = "^0.10.1"
+flask-wtf = "^0.14.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^3.0"

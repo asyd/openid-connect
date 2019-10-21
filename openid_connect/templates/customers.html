@@ -1,0 +1,30 @@
+{% extends "_base.html" %}
+{% block content %}
+    <div class="customer">
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for customer in customers %}
+                <tr>
+                    <td>
+                        {{ customer.name }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="form">
+        <form method="POST" action="{{ url_for('admin.customers') }}">
+            {{ form.csrf_token }}
+            <div class="input-field">
+                {{ form.name.label }} {{ form.name() }}
+            </div>
+            <input type="submit" value="Add new"/>
+        </form>
+    </div>
+{% endblock %}

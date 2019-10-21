@@ -1,7 +1,7 @@
 import socket
 import datetime
 
-SQLALCHEMY_DATABASE_URI = 'sqlite:///dev.db'
+SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/dev.db'
 SECRET_KEY = 'unsecure-dev-key'
 SERVER_NAME = 'asuka.home.opencsi.com:5000'
 

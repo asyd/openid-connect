@@ -2,6 +2,7 @@ from flask import Flask, flash, redirect, url_for
 from flask_migrate import Migrate
 from .extensions import db, auth
 from flask_pyoidc.provider_configuration import ProviderConfiguration, ClientMetadata
+from flask_debugtoolbar import DebugToolbarExtension
 
 
 def create_app(environment: str):
@@ -14,6 +15,10 @@ def create_app(environment: str):
             client_secret=app.config['OIDC_PROVIDER']['client_secret']
         )
     )
+
+    if app.debug:
+        toolbar = DebugToolbarExtension()
+        toolbar.init_app(app)
 
     auth._provider_configurations = {'default': app.config['OIDC']}
 
@@ -31,7 +36,10 @@ def create_app(environment: str):
             event.listen(db.engine, 'connect', _fk_pragma_on_connect)
 
     from .home import bp as ui_bp
+    from .admin import bp as admin_bp
+
     app.register_blueprint(ui_bp)
+    app.register_blueprint(admin_bp)
 
     @app.route('/ping')
     def ping():
