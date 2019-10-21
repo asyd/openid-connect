@@ -8,6 +8,8 @@ authors = ["Bruno Bonfils <bbonfils@gmail.com>"]
 python = "^3.7"
 flask = "^1.1"
 flask-pyoidc = "^3.0"
+flask-sqlalchemy = "^2.4"
+flask-migrate = "^2.5"
 
 [tool.poetry.dev-dependencies]
 pytest = "^3.0"
