@@ -18,13 +18,22 @@
             </tbody>
         </table>
     </div>
-    <div class="form">
-        <form method="POST" action="{{ url_for('admin.customers') }}">
-            {{ form.csrf_token }}
-            <div class="input-field">
-                {{ form.name.label }} {{ form.name() }}
+    <a class="btn modal-trigger" href="#modal-customer">Add customer</a>
+    <div id="modal-customer" class="modal">
+        <div class="modal-content">
+            <h4>Create a customer</h4>
+            <div class="row">
+
+                <form method="POST" action="{{ url_for('admin.customers') }}" class="col s12">
+                    {{ form.csrf_token }}
+                    <div class="input-field">
+                        {{ form.name.label }} {{ form.name() }}
+                    </div>
+                    <div class="modal-footer">
+                        <input class="btn-flat" type="submit" value="Add"/>
+                    </div>
+                </form>
             </div>
-            <input type="submit" value="Add new"/>
-        </form>
+        </div>
     </div>
 {% endblock %}

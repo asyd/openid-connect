@@ -1,7 +1,5 @@
 from .extensions import db
 import datetime
-from wtforms_alchemy import ModelForm
-# from flask.ext.wtf import FlaskForm
 from flask_wtf import FlaskForm
 from wtforms_alchemy import model_form_factory
 from wtforms import StringField
@@ -18,6 +16,27 @@ class Customer(db.Model, _TableTemplate):
     __tablename__ = 'customer'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text, nullable=False, info={'form_field_class': StringField})
+
+
+class Project(db.Model, _TableTemplate):
+    __tablename__ = 'project'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
+    customer = db.relationship('Customer', foreign_keys=[customer_id])
+
+
+class User(db.Model, _TableTemplate):
+    __tablename__ = 'user'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+
+
+class Task(db.Model, _TableTemplate):
+    __tablename__ = 'task'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    label = db.Column(db.String, nullable=False)
 
 
 class CustomerForm(ModelForm):

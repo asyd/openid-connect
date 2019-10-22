@@ -2,7 +2,6 @@ from flask import Flask, flash, redirect, url_for
 from flask_migrate import Migrate
 from .extensions import db, auth
 from flask_pyoidc.provider_configuration import ProviderConfiguration, ClientMetadata
-from flask_debugtoolbar import DebugToolbarExtension
 
 
 def create_app(environment: str):
@@ -16,9 +15,10 @@ def create_app(environment: str):
         )
     )
 
-    if app.debug:
-        toolbar = DebugToolbarExtension()
-        toolbar.init_app(app)
+    # if app.debug:
+    #     from flask_debugtoolbar import DebugToolbarExtension
+    #     toolbar = DebugToolbarExtension()
+    #     toolbar.init_app(app)
 
     auth._provider_configurations = {'default': app.config['OIDC']}
 
