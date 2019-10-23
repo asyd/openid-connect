@@ -12,7 +12,7 @@ bp = Blueprint(
 
 @bp.route('/')
 def hello():
-    return render_template('_base.html')
+    return render_template('home.html')
 
 
 @bp.route('/login')

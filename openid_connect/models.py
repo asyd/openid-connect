@@ -2,9 +2,15 @@ from .extensions import db
 import datetime
 from flask_wtf import FlaskForm
 from wtforms_alchemy import model_form_factory
-from wtforms import StringField
+from wtforms import StringField, IntegerField
 
-ModelForm = model_form_factory(FlaskForm)
+BaseModelForm = model_form_factory(FlaskForm)
+
+
+class ModelForm(BaseModelForm):
+    @classmethod
+    def get_session(cls):
+        return db.session
 
 
 class _TableTemplate:
@@ -15,13 +21,13 @@ class _TableTemplate:
 class Customer(db.Model, _TableTemplate):
     __tablename__ = 'customer'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.Text, nullable=False, info={'form_field_class': StringField})
+    name = db.Column(db.Text, nullable=False, info={'form_field_class': StringField}, unique=True)
 
 
 class Project(db.Model, _TableTemplate):
     __tablename__ = 'project'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False)
+    name = db.Column(db.String, nullable=False, unique=True)
     customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
     customer = db.relationship('Customer', foreign_keys=[customer_id])
 
@@ -29,16 +35,32 @@ class Project(db.Model, _TableTemplate):
 class User(db.Model, _TableTemplate):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False)
+    name = db.Column(db.String, nullable=False, unique=True)
 
 
 class Task(db.Model, _TableTemplate):
     __tablename__ = 'task'
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String, nullable=False)
     label = db.Column(db.String, nullable=False)
+    active = db.Column(db.Boolean, nullable=False, default=True)
+    customer_id = db.Column('Customer', db.ForeignKey('customer.id'), nullable=False)
+    customer = db.relationship('Customer', foreign_keys=[customer_id])
+    adr = db.Column(db.Float, nullable=False, default=0)
+    amount = db.Column(db.Integer, nullable=False, default=0)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship('User', foreign_keys=[user_id])
+    project_id = db.Column(db.Integer, db.ForeignKey('project.id'), nullable=False)
+    project = db.relationship('Project', foreign_keys=[project_id])
+
+
+class ProjectForm(ModelForm):
+    class Meta:
+        model = Project
+
+    customer_id = IntegerField()
 
 
 class CustomerForm(ModelForm):
     class Meta:
         model = Customer
+

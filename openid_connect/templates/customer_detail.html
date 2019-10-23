@@ -4,32 +4,29 @@
         <table>
             <thead>
             <tr>
-                <th>Customers</th>
-                <th class="right-align"><a href="#modal-customer" class="modal-trigger"><i class="material-icons">add_box</i></a></th>
+                <th>List of projects for {{ current_customer.name }}</th>
             </tr>
             </thead>
             <tbody>
-            {% for customer in customers %}
+            {% for project in projects %}
                 <tr>
                     <td>
-                        <a href="{{ url_for('admin.customer', customer_id=customer.id) }}">{{ customer.name }}</a>
-                    </td>
-                    <td class="right-align">
-                    <a href=""><i class="material-icons icon-red">delete</i></a>
+                        <a href="">{{ project.name }}</a>
                     </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
     </div>
-    {#    <a class="btn modal-trigger" href="#modal-customer">Add customer</a>#}
-    <div id="modal-customer" class="modal">
+    <a class="btn modal-trigger" href="#modal-project">Add project</a>
+    <div id="modal-project" class="modal">
         <div class="modal-content">
-            <h4>Create a customer</h4>
+            <h4>Create a project</h4>
             <div class="row">
 
-                <form method="POST" action="{{ url_for('admin.customer_new') }}" class="col s12">
+                <form method="POST" action="{{ url_for('admin.project_new') }}" class="col s12">
                     {{ form.csrf_token }}
+                    <input type="hidden" name="customer_id" value="{{ current_customer.id }}">
                     <div class="input-field">
                         {{ form.name.label }} {{ form.name() }}
                     </div>
