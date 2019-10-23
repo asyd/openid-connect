@@ -1,4 +1,4 @@
-from openid_connect.app import create_app
+from timetracking.app import create_app
 import os
 
 environment = 'development'
