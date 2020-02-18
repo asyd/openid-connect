@@ -21,3 +21,5 @@ USER_ENABLE_EMAIL = False
 USER_ENABLE_USERNAME = False
 USER_EMAIL_SENDER_NAME = USER_APP_NAME
 USER_EMAIL_SENDER_EMAIL = 'noreply@opencsi.com'
+# Disable usage of password if openid connect is used
+USER_ENABLE_AUTH0 = True
