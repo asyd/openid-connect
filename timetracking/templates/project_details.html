@@ -4,16 +4,16 @@
         <table>
             <thead>
             <tr>
-                <th>List of projects for {{ current_customer.name }}</th>
-                <th class="right-align"><a href="#modal-project" class="modal-trigger">
+                <th>List of tasks for {{ current_project.name }}</th>
+                <th class="right-align"><a href="#modal-task" class="modal-trigger">
                     <i class="material-icons">add_box</i></a></th>
             </tr>
             </thead>
             <tbody>
-            {% for project in projects %}
+            {% for task in tasks %}
                 <tr>
                     <td>
-                        <a href="{{ url_for('admin.project_detail', project_id=project.id) }}">{{ project.name }}</a>
+                        <a href="">{{ project.adr }}</a>
                     </td>
                     <td class="right-align">
                         <a href=""><i class="material-icons icon-red">delete</i></a>
@@ -23,16 +23,21 @@
             </tbody>
         </table>
     </div>
-    <div id="modal-project" class="modal">
+    <div id="modal-task" class="modal">
         <div class="modal-content">
-            <h4>Create a project</h4>
+            <h4>Create a task</h4>
             <div class="row">
-
-                <form method="POST" action="{{ url_for('admin.project_new') }}" class="col s12">
+                <form method="POST" action="{{ url_for('admin.task_new') }}" class="col s12">
                     {{ form.csrf_token }}
-                    <input type="hidden" name="customer_id" value="{{ current_customer.id }}">
+                    <input type="hidden" name="project_id" value="{{ current_project.id }}">
                     <div class="input-field">
-                        {{ form.name.label }} {{ form.name() }}
+                        {{ form.adr.label }} {{ form.adr() }}
+                    </div>
+                    <div class="input-field">
+                        {{ form.amount.label }} {{ form.amount() }}
+                    </div>
+                    <div class="select-field">
+                        {{ form.user.label }} {{ form.user() }}
                     </div>
                     <div class="modal-footer">
                         <input class="btn-flat" type="submit" value="Add"/>

@@ -1,4 +1,4 @@
-from openid_connect import __version__
+from timetracking import __version__
 
 
 def test_version():

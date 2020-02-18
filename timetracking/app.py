@@ -1,7 +1,8 @@
 from flask import Flask, flash, redirect, url_for
 from flask_migrate import Migrate
-from .extensions import db, auth
+from .extensions import db, auth, user_manager
 from flask_pyoidc.provider_configuration import ProviderConfiguration, ClientMetadata
+from .models import Role, User
 
 
 def create_app(environment: str):
@@ -26,6 +27,19 @@ def create_app(environment: str):
 
     db.init_app(app)
     Migrate(app, db)
+
+    user_manager.init_app(app, db, UserClass=User)
+
+    @app.context_processor
+    def context_processor():
+        return dict(user_manager=user_manager)
+
+    # # Add some roles
+    # with app.app_context():
+    #     if Role.query.filter(Role.name == 'Administrator').count() == 0:
+    #         admin_role = Role(name='Administrator')
+    #         db.session.add(admin_role)
+    #         db.commit()
 
     if 'sqlite' in app.config['SQLALCHEMY_DATABASE_URI']:
         def _fk_pragma_on_connect(dbapi_con, con_record):  # noqa
