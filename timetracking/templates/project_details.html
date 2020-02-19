@@ -31,13 +31,16 @@
                     {{ form.csrf_token }}
                     <input type="hidden" name="project_id" value="{{ current_project.id }}">
                     <div class="input-field">
+                        {{ form.label.label }} {{ form.label() }}
+                    </div>
+                    <div class="input-field">
                         {{ form.adr.label }} {{ form.adr() }}
                     </div>
                     <div class="input-field">
                         {{ form.amount.label }} {{ form.amount() }}
                     </div>
                     <div class="select-field">
-                        {{ form.user.label }} {{ form.user() }}
+                        {{ form.user_id.label }} {{ form.user_id() }}
                     </div>
                     <div class="modal-footer">
                         <input class="btn-flat" type="submit" value="Add"/>

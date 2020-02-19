@@ -56,7 +56,7 @@ class Task(db.Model, _TableTemplate):
     id = db.Column(db.Integer, primary_key=True)
     label = db.Column(db.String, nullable=False)
     active = db.Column(db.Boolean, nullable=False, default=True)
-    adr = db.Column(db.Float, nullable=False, default=0)
+    adr = db.Column(db.Integer, nullable=False, default=0)
     amount = db.Column(db.Integer, nullable=False, default=0)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = db.relationship('User', foreign_keys=[user_id])
@@ -86,5 +86,6 @@ class TaskForm(ModelForm):
         model = Task
 
     project_id = IntegerField()
-    user = SelectField('User', coerce=int)
+    user_id = SelectField('User', coerce=int)
+    # user =
     # user = FieldList(StringField('user_login'))

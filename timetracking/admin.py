@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, flash, redirect, url_for
+from flask import Blueprint, render_template, flash, redirect, url_for, request
 from .models import CustomerForm, Customer, Project, ProjectForm, Task, TaskForm, User
 from .extensions import db
 
@@ -45,7 +45,7 @@ def customer_new():
 @bp.route('/project/<int:project_id>')
 def project_detail(project_id: int):
     form = TaskForm()
-    form.user.choices = [(x.id, x.login) for x in User.query.all()]
+    form.user_id.choices = [(x.id, x.login) for x in User.query.all()]
     if form.validate_on_submit():
         pass
     else:
@@ -72,4 +72,12 @@ def project_new():
 
 @bp.route('/task/new', methods=['POST'])
 def task_new():
-    pass
+    form = TaskForm()
+    if form.validate_on_submit():
+        task = Task()
+        form.populate_obj(task)
+        db.session.add(task)
+        db.session.commit()
+        flash("Task added")
+
+    return redirect(url_for('admin.project', project_id=task.project_id))

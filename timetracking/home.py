@@ -40,11 +40,9 @@ def oauth_login():
         return user
 
     print(user.first().email)
-    # TODO: logged user and redirect to home page
     flask_user, _ = user_manager.db_manager.get_user_and_user_email_by_email(user.first().email)
     login_user(flask_user)
     return redirect('/')
-    # return user.first()
 
 
 @bp.route('/test')
